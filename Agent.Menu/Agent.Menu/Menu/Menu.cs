@@ -15,23 +15,19 @@ namespace Agent.Menu.Menu
 
         public event MenuItemClicked OnMenuItemClicked;
         private Bitmap _screen = null;
-        private ButtonHelper _buttonHelper = null;
         public int SelectedIndex { get; set; }
         public ArrayList Items { get; set; }
         private int _maxVisible = 0;
 
-        public Menu(Bitmap screen = null, ButtonHelper buttonHelper = null)
+        public Menu(Bitmap screen = null)
         {
             _screen = screen;
             if (_screen == null) _screen = new Bitmap(Bitmap.MaxWidth, Bitmap.MaxHeight);
-            _buttonHelper = buttonHelper;
-            if (_buttonHelper == null)
-                _buttonHelper = new ButtonHelper((Cpu.Pin) Buttons.Top, (Cpu.Pin) Buttons.Middle,
-                                                 (Cpu.Pin) Buttons.Bottom);
+                                                 
             SelectedIndex = 0;
             Items = new System.Collections.ArrayList();
 
-            _buttonHelper.OnButtonPress += buttonHelper_OnButtonPress;
+            ButtonHelper.Current.OnButtonPress += buttonHelper_OnButtonPress;
 
             _maxVisible = AgentSize/menuFont.Height;
         }

@@ -23,6 +23,20 @@ namespace Agent.Menu
 
     public class ButtonHelper
     {
+        private static object _lock = new object();
+        private static ButtonHelper current;
+        public static ButtonHelper Current
+        {
+            get
+            {
+                lock (_lock)
+                {
+                    if (current == null) current = new ButtonHelper((Cpu.Pin)Buttons.Top, (Cpu.Pin)Buttons.Middle,
+                                                  (Cpu.Pin)Buttons.Bottom);
+                }
+                return current;
+            }
+        }
         public delegate void ButtonPress(Buttons button, InterruptPort port, ButtonDirection direction, DateTime time);
 
         public event ButtonPress OnButtonPress;

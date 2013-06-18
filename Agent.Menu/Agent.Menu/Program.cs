@@ -2,6 +2,7 @@
 using System.Threading;
 using Agent.Menu.Menu;
 using Microsoft.SPOT;
+using Microsoft.SPOT.Hardware;
 
 namespace Agent.Menu
 {
@@ -28,7 +29,15 @@ namespace Agent.Menu
             menu.OnMenuItemClicked += menu_OnMenuItemClicked;
             menu.Render();
 
+
+            ButtonHelper helper = ButtonHelper.Current;
+            helper.OnButtonPress += helper_OnButtonPress;
             System.Threading.Thread.Sleep(Timeout.Infinite);
+        }
+
+        static void helper_OnButtonPress(Buttons button, InterruptPort port, ButtonDirection direction, DateTime time)
+        {
+            Debug.Print("hiiiiii");
         }
 
         static void menu_OnMenuItemClicked(Menu.Menu menu, MenuItem menuItem, DateTime time)
